@@ -1,0 +1,9 @@
+.hero {
+    background: url(../public/images/Background22.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    border-bottom-right-radius: 25%;
+    border-bottom-left-radius: 25%;
+}

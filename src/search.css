@@ -1,0 +1,14 @@
+.navbar{
+    background: url(../public/images/Background.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.inp{
+    position: fixed;
+    bottom: 0;
+    right: 2%;
+    
+}
