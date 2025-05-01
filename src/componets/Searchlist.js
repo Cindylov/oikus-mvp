@@ -1,27 +1,62 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
 import PropertyCard from "./PropertyCard";
 
 const Searchlist = () => {
+  const location = useLocation();
+  const query = location.state?.query || "";
+  const [properties, setProperties] = useState([]);
+  const [loading, setLoading] = useState(true);
+  
+  console.log(query, "qwery");
+  
+
+  useEffect(() => {
+    if (!query) return;
+
+    const fetchProperties = async () => {
+      try {
+        const response = await axios.post(
+          "https://search-feature-eight.vercel.app/get_property/",
+          { text: query }
+        );
+        setProperties(response.data || []);
+      } catch (error) {
+        console.error("Failed to fetch properties:", error);
+        setProperties([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProperties();
+  }, [query]);
+
   return (
-    <section className="py-12 px-6 bg-white">
-      <div className="flex justify-between">
-      <div>
-      <p className="text-gray-600 font-bold mb-6">Showing  1024 active listings of “2 Bedroom flats in Surulere”</p>
+    <section className="px-6 py-12 bg-white">
+      <div className="flex flex-col gap-4 md:flex-row md:justify-between">
+        <p className="font-bold text-gray-600">
+          Showing {properties.length} result{properties.length !== 1 && "s"} for “{query}”
+        </p>
+
+        <select className="self-start md:self-auto">
+          <option>Sort by Relevant Listings</option>
+          <option>Sort by Recent Listings</option>
+        </select>
       </div>
 
-      <div>
-      <select>
-        <option className='text-gray-600'>Sort by <span className='text-[#12AF9B]'>Relevant Listings</span></option>
-        <option>Sort by important Listings</option>
-        <option>Sort by some Listings</option>
-      </select>
-      </div>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {[1, 2, 3, 4].map((item) => (
-          <PropertyCard key={item} />
-        ))}
-      </div>
+      {loading ? (
+        <p className="mt-6">Loading...</p>
+      ) : properties.length === 0 ? (
+        <p className="mt-6">No properties found for your search.</p>
+      ) : (
+        <div className="grid grid-cols-1 gap-6 mt-6 md:grid-cols-2 lg:grid-cols-3">
+          {properties.map((property) => (
+            <PropertyCard key={property.id} property={property} />
+          ))}
+        </div>
+      )}
     </section>
   );
 };
