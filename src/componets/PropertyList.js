@@ -1,11 +1,33 @@
-import React from "react";
-import PropertyCard from "./PropertyCard";
+import React, { useEffect, useState } from "react";
+import PropertyCard from "./home/PropertyCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 
 const PropertyList = () => {
+  const [properties, setProperties] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProperties = async () => {
+      try {
+        const response = await fetch("https://search-feature-eight.vercel.app/list_properties/");
+        const data = await response.json();
+        setProperties(data);
+      } catch (error) {
+        console.error("Failed to fetch properties:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProperties();
+    
+    
+  }, []);
+  console.log(properties, "properties");
+
   return (
     <section className="px-6 py-12 bg-white">
       <div className="flex flex-wrap justify-between gap-4">
@@ -23,25 +45,29 @@ const PropertyList = () => {
       </div>
 
       {/* Swiper Slider */}
-      <Swiper
-        modules={[Pagination]}
-        spaceBetween={16}
-        slidesPerView={1.2}
-        pagination={{ clickable: true }}
-        breakpoints={{
-          640: { slidesPerView: 1 },
-          768: { slidesPerView: 2 },
-          1024: { slidesPerView: 3 },
-          1280: { slidesPerView: 4 },
-        }}
-        className="mt-10"
-      >
-        {[1, 2, 3, 4, 5, 6].map((item) => (
-          <SwiperSlide key={item}>
-            <PropertyCard />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      {loading ? (
+        <p className="mt-10 text-center">Loading properties...</p>
+      ) : (
+        <Swiper
+          modules={[Pagination]}
+          spaceBetween={16}
+          slidesPerView={1.2}
+          pagination={{ clickable: true }}
+          breakpoints={{
+            640: { slidesPerView: 1 },
+            768: { slidesPerView: 2 },
+            1024: { slidesPerView: 3 },
+            1280: { slidesPerView: 4 },
+          }}
+          className="mt-10"
+        >
+          {properties.map((property) => (
+            <SwiperSlide key={property.id}>
+              <PropertyCard property={property} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      )}
     </section>
   );
 };
