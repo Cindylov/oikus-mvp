@@ -2,15 +2,17 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import PropertyCard from "./PropertyCard";
+import { useNavigate } from "react-router-dom";
+import SearchForm from "./home/SearchForm";
 
 const Searchlist = () => {
   const location = useLocation();
   const query = location.state?.query || "";
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
-  
+
   console.log(query, "qwery");
-  
+
 
   useEffect(() => {
     if (!query) return;
@@ -32,6 +34,16 @@ const Searchlist = () => {
 
     fetchProperties();
   }, [query]);
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!searchQuery.trim()) return;
+    // Redirect to /search and pass the query via state
+    navigate("/search", { state: { query: searchQuery } });
+  };
 
   return (
     <section className="px-6 py-12 bg-white">
@@ -56,7 +68,19 @@ const Searchlist = () => {
             <PropertyCard key={property.id} property={property} />
           ))}
         </div>
+
       )}
+      <div className="">
+        <div className="fixed bottom-0 z-50 w-full max-w-screen-xl px-6 transform -translate-x-1/2 bg-white shadow-md left-1/2 md:w-[70%] lg:ms-36">
+          <SearchForm
+            onSubmit={handleSubmit}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            value={searchQuery}
+            // className={"hidden"}
+          />
+        </div>
+
+      </div>
     </section>
   );
 };

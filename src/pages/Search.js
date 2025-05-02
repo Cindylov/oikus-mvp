@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Searchlist from '../componets/Searchlist';
 import "../search.css";
 import { ReactTyped } from "react-typed";
+import SearchForm from '../componets/home/SearchForm';
+import { useNavigate } from "react-router-dom";
 
 const SidebarApp = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -23,6 +25,16 @@ const SidebarApp = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!searchQuery.trim()) return;
+    // Redirect to /search and pass the query via state
+    navigate("/search", { state: { query: searchQuery } });
+  };
+
   return (
     <div className="flex flex-1">
       {/* Sidebar Toggle for small screens */}
@@ -32,6 +44,7 @@ const SidebarApp = () => {
       >
         ☰
       </button>
+
 
       {/* Sidebar */}
       <div
@@ -48,24 +61,23 @@ const SidebarApp = () => {
           >
             {/* {isSidebarCollapsed ? '→' : '←'} */}
             <img
-  src="../../images/Vector.png"
-  alt="Toggle Sidebar"
-  className={`w-4 h-4 transition-transform duration-300 ${
-    isSidebarCollapsed ? 'rotate-180' : ''
-  }`}
-/>
+              src="../../images/Vector.png"
+              alt="Toggle Sidebar"
+              className={`w-4 h-4 transition-transform duration-300 ${isSidebarCollapsed ? 'rotate-180' : ''
+                }`}
+            />
 
           </button>
 
           {/* Logo */}
           <div className="flex items-center justify-center flex-shrink-0 py-10">
             <a href="#">
-            <span aria-hidden="true" className="p-2">
-              <img
-                className="w-24 h-auto"
-                src="../../images/Oikusat logo_Primary Outline_Positive Landscape.png"
-                alt="oikus-logo"
-              />
+              <span aria-hidden="true" className="p-2">
+                <img
+                  className="w-24 h-auto"
+                  src="../../images/Oikusat logo_Primary Outline_Positive Landscape.png"
+                  alt="oikus-logo"
+                />
               </span>
               {!isSidebarCollapsed && <span className='font-medium text-white'>oikus</span>}
             </a>
@@ -73,7 +85,7 @@ const SidebarApp = () => {
 
           {/* Links */}
           <div className="flex-1 px-2 space-y-2 overflow-hidden hover:overflow-auto">
-          <a
+            <a
               href="#"
               className="flex items-center space-x-2 text-white transition-colors rounded-lg group hover:bg-[#12AF9B66] hover:text-white p-2"
             >
@@ -172,28 +184,9 @@ const SidebarApp = () => {
         </nav>
       </div>
 
-      {/* Main */}
-      <main className="px-4 py-8 ">
+      <main className="w-full max-w-5xl px-4 py-8 ml-auto">
         <p>Back</p>
-      <Searchlist />
-      <div className="w-10/12 mx-auto bg-white  inp">
-              <ReactTyped
-                strings={[
-                  "I'm looking for a 5 Bedroom House in Ajah",
-                  "I want a 4 Bedroom House in Lekki",
-                  "I want a 3 Bedroom duplex in ikeja that cost 2,000,000 naira",
-                ]}
-                typeSpeed={40}
-                backSpeed={50}
-                attr="placeholder"
-                loop
-              >
-                <input
-                  type="text"
-                  className="w-full p-4 rounded-full focus:outline-none text-white bg-[#B2B2B233]"
-                />
-              </ReactTyped>
-            </div>
+        <Searchlist />
       </main>
 
       {/* Settings Panel */}
@@ -205,9 +198,8 @@ const SidebarApp = () => {
         ></div>
       )}
       <section
-        className={`fixed inset-y-0 right-0 w-64 bg-white border-l border-indigo-100 rounded-l-3xl transition-transform duration-300 ${
-          isSettingsPanelOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
+        className={`fixed inset-y-0 right-0 w-64 bg-white border-l border-indigo-100 rounded-l-3xl transition-transform duration-300 ${isSettingsPanelOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
       >
         {/* <div className="px-4 py-8">
           <h2 className="text-lg font-semibold">Settings</h2>
