@@ -1,10 +1,18 @@
 import React, { useState } from "react";
 import PropertyRequest from "../pages/PropertyRequest";
-import { createPortal } from 'react-dom';
-import { Link } from "react-router-dom";
+import { createPortal } from "react-dom";
 import Button from "./home/Button";
 
 const RequestSection = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <section className="flex flex-col items-center gap-8 py-12 px-6 md:px-[6rem] bg-gray-100 md:flex-row">
@@ -13,11 +21,13 @@ const RequestSection = () => {
         <p className="mb-6 text-gray-600">
           Can’t find what you want? Tell us what you need, and our agents will find it! Fill in your preferences, and we'll send matching listings within 24 hours.
         </p>
-        <Link to="/request">
-          <Button children={"Get Started"} className={"mt-10"} />
-        </Link>
-
+        <Button
+          onClick={handleOpenModal}
+          children={"Get Started"}
+          className={"mt-10"}
+        />
       </div>
+
       <div className="flex justify-end gap-4 md:w-1/2">
         <div className="w-1/2">
           <img
@@ -35,6 +45,16 @@ const RequestSection = () => {
         </div>
       </div>
 
+      {isModalOpen &&
+        createPortal(
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="">
+              
+              <PropertyRequest onclick={handleCloseModal} />
+            </div>
+          </div>,
+          document.body
+        )}
     </section>
   );
 };

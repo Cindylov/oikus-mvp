@@ -4,13 +4,18 @@ import RequestBar from "../componets/RequestBar";
 
 
 
-const PropertyRequest = ({ onClose }) => {
+const PropertyRequest = ({ onclick, onClose }) => {
   return (
-    <div className="flex items-center justify-center min-h-screen p-4 bg-gray-100">
-      <div className="bg-white p-6 rounded-md w-full text-center md:w-[70%]">
+    <div className="flex items-center justify-center min-h-screen p-4 ">
+      <div className="w-full p-6 text-center bg-white rounded-md">
         <div className="flex items-center justify-between mb-4">
           <h2 className="mx-auto text-lg font-semibold">Add a Property Request</h2>
-          <button className="text-xl text-gray-500">×</button>
+          <button
+            className=""
+            onClick={onclick}
+          >
+            X
+          </button>
           {/* <button onClick={onClose}>Close</button> */}
         </div>
         <p className="mb-4 text-sm text-gray-600">

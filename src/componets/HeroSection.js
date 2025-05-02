@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../hero.css";
-import Button from "./home/Button";
-import { ReactTyped } from "react-typed";
+// import Button from "./home/Button";
+import SearchForm from "./home/SearchForm";
+// import { ReactTyped } from "react-typed";
+// import { FaSearch } from "react-icons/fa";
 
 const HeroSection = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -37,27 +39,33 @@ const HeroSection = () => {
               </p>
             </div>
 
-            <form onSubmit={handleSubmit}>
-              <ReactTyped
-                strings={[
-                  "I'm looking for a 5 Bedroom House in Ajah",
-                  "I want a 4 Bedroom House in Lekki",
-                  "I want a 3 Bedroom duplex in Ikeja that cost 2,000,000 naira",
-                ]}
-                typeSpeed={40}
-                backSpeed={50}
-                attr="placeholder"
-                loop
-              >
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full p-4 rounded-full focus:outline-none text-gray-700 bg-[#21212180] placeholder-white"
-                />
-              </ReactTyped>
+            {/* <form onSubmit={handleSubmit}>
+              <div className="relative">
+                <FaSearch className="absolute left-[10px] top-[22px] text-white" />
+                <ReactTyped
+                  strings={[
+                    "I'm looking for a 5 Bedroom House in Ajah",
+                    "I want a 4 Bedroom House in Lekki",
+                    "I want a 3 Bedroom duplex in Ikeja that cost 2,000,000 naira",
+                  ]}
+                  typeSpeed={40}
+                  backSpeed={50}
+                  attr="placeholder"
+                  loop
+                >
+
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full p-4 px-8 rounded-full focus:outline-none text-white bg-[#21212180] placeholder-white"
+                  />
+                </ReactTyped>
+
+              </div>
               <Button children={"search"} className={"block mx-auto mt-10"} />
-            </form>
+            </form> */}
+            <SearchForm onSubmit={handleSubmit} onChange={(e) => setSearchQuery(e.target.value)} value={searchQuery} />
           </div>
         </div>
       </div>
