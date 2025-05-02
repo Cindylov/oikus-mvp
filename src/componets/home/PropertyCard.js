@@ -25,7 +25,7 @@ const PropertyCard = ({ property }) => {
       <div className="p-4">
         <h3 className="text-lg font-bold">₦{property.price.toLocaleString()}</h3>
 
-        <div className="flex justify-between my-6 text-sm text-gray-500">
+        <div className="flex justify-between my-2 text-sm text-gray-500">
           <span className="flex items-center gap-1">
             <IoIosBed /> {property.no_beds} Beds
           </span>
@@ -47,11 +47,12 @@ const PropertyCard = ({ property }) => {
         </div>
 
         <div className="flex flex-wrap gap-2 mt-3">
-          <span className="bg-[#12AF9B30] text-[#12AF9B] text-xs px-2 py-1 rounded-full">
-            Available
+          <span className="bg-[#f7bc50] text-[white] text-xs px-2 py-1 rounded-full">
+            Verification Ongoing
           </span>
           <span className="bg-[#1273AF1A] text-[#1273AF] text-xs px-2 py-1 rounded-full">
             {property.name.includes("New") ? "Newly Built" : "For Sale"}
+            {/* {property.listing_type} */}
           </span>
           <FaRegHeart className="cursor-pointer ms-auto" />
         </div>
