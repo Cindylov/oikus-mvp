@@ -6,9 +6,9 @@ import PropertyTabs from "../componets/PropertyTabs";
 
 const PropertyDetails = () => {
   return (
-    <div className="flex flex-col md:flex-row min-h-screen p-4 bg-gray-100">
+    <div className="flex flex-col min-h-screen p-4 bg-gray-100 md:flex-row">
       <PropertyImage />
-      <div className="flex flex-col md:w-1/2 w-full bg-white rounded-r-md p-6">
+      <div className="flex flex-col w-full p-6 bg-white md:w-1/2 rounded-r-md">
         <PropertyInfo />
         <PropertyActivity />
         <PropertyTabs />
